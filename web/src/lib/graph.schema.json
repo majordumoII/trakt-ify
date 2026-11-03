@@ -1,0 +1,594 @@
+{
+  "$defs": {
+    "CalibrationBucket": {
+      "description": "Hit rate for candidates whose support (per 1,000 library films) is at\nleast `min_per_thousand`, up to the next bucket.",
+      "properties": {
+        "minPerThousand": {
+          "title": "Minperthousand",
+          "type": "number"
+        },
+        "hitRate": {
+          "title": "Hitrate",
+          "type": "number"
+        },
+        "samples": {
+          "title": "Samples",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "minPerThousand",
+        "hitRate",
+        "samples"
+      ],
+      "title": "CalibrationBucket",
+      "type": "object"
+    },
+    "ClusterGenre": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "share": {
+          "title": "Share",
+          "type": "number"
+        }
+      },
+      "required": [
+        "name",
+        "share"
+      ],
+      "title": "ClusterGenre",
+      "type": "object"
+    },
+    "ClusterProfile": {
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "size": {
+          "title": "Size",
+          "type": "integer"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "summary": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Summary"
+        },
+        "themes": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Themes",
+          "type": "array"
+        },
+        "labelSource": {
+          "title": "Labelsource",
+          "type": "string"
+        },
+        "genres": {
+          "items": {
+            "$ref": "#/$defs/ClusterGenre"
+          },
+          "title": "Genres",
+          "type": "array"
+        },
+        "eraStart": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Erastart"
+        },
+        "eraEnd": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Eraend"
+        },
+        "anchors": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Anchors",
+          "type": "array"
+        },
+        "ratedCount": {
+          "default": 0,
+          "title": "Ratedcount",
+          "type": "integer"
+        },
+        "avgUserRating": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Avguserrating"
+        },
+        "recommendations": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Recommendation"
+          },
+          "title": "Recommendations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "size",
+        "label",
+        "labelSource",
+        "genres",
+        "anchors"
+      ],
+      "title": "ClusterProfile",
+      "type": "object"
+    },
+    "Evaluation": {
+      "description": "Hold-out test of the recommender against your real history.",
+      "properties": {
+        "folds": {
+          "title": "Folds",
+          "type": "integer"
+        },
+        "holdoutShare": {
+          "title": "Holdoutshare",
+          "type": "number"
+        },
+        "k": {
+          "title": "K",
+          "type": "integer"
+        },
+        "topKHitRate": {
+          "title": "Topkhitrate",
+          "type": "number"
+        },
+        "clusterLocalHitRate": {
+          "title": "Clusterlocalhitrate",
+          "type": "number"
+        },
+        "calibration": {
+          "items": {
+            "$ref": "#/$defs/CalibrationBucket"
+          },
+          "title": "Calibration",
+          "type": "array"
+        },
+        "testedAt": {
+          "format": "date-time",
+          "title": "Testedat",
+          "type": "string"
+        }
+      },
+      "required": [
+        "folds",
+        "holdoutShare",
+        "k",
+        "topKHitRate",
+        "clusterLocalHitRate",
+        "calibration",
+        "testedAt"
+      ],
+      "title": "Evaluation",
+      "type": "object"
+    },
+    "GraphEdge": {
+      "properties": {
+        "source": {
+          "title": "Source",
+          "type": "integer"
+        },
+        "target": {
+          "title": "Target",
+          "type": "integer"
+        },
+        "weight": {
+          "title": "Weight",
+          "type": "number"
+        },
+        "shared": {
+          "title": "Shared",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "source",
+        "target",
+        "weight",
+        "shared"
+      ],
+      "title": "GraphEdge",
+      "type": "object"
+    },
+    "GraphMeta": {
+      "properties": {
+        "username": {
+          "title": "Username",
+          "type": "string"
+        },
+        "generatedAt": {
+          "format": "date-time",
+          "title": "Generatedat",
+          "type": "string"
+        },
+        "movieCount": {
+          "title": "Moviecount",
+          "type": "integer"
+        },
+        "nodeCount": {
+          "title": "Nodecount",
+          "type": "integer"
+        },
+        "edgeCount": {
+          "title": "Edgecount",
+          "type": "integer"
+        },
+        "communityCount": {
+          "title": "Communitycount",
+          "type": "integer"
+        },
+        "minWeight": {
+          "title": "Minweight",
+          "type": "number"
+        },
+        "topK": {
+          "title": "Topk",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "username",
+        "generatedAt",
+        "movieCount",
+        "nodeCount",
+        "edgeCount",
+        "communityCount",
+        "minWeight",
+        "topK"
+      ],
+      "title": "GraphMeta",
+      "type": "object"
+    },
+    "GraphNode": {
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Year"
+        },
+        "slug": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Slug"
+        },
+        "imdb": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Imdb"
+        },
+        "tmdb": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tmdb"
+        },
+        "degree": {
+          "default": 0,
+          "title": "Degree",
+          "type": "integer"
+        },
+        "community": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Community"
+        },
+        "plays": {
+          "default": 0,
+          "title": "Plays",
+          "type": "integer"
+        },
+        "lastWatchedAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lastwatchedat"
+        },
+        "genres": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Genres",
+          "type": "array"
+        },
+        "userRating": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Userrating"
+        }
+      },
+      "required": [
+        "id",
+        "label"
+      ],
+      "title": "GraphNode",
+      "type": "object"
+    },
+    "Recommendation": {
+      "description": "An unwatched film, with the evidence for recommending it.",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Year"
+        },
+        "slug": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Slug"
+        },
+        "poster": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Poster"
+        },
+        "overview": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Overview"
+        },
+        "genres": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Genres",
+          "type": "array"
+        },
+        "communityRating": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Communityrating"
+        },
+        "votes": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Votes"
+        },
+        "score": {
+          "title": "Score",
+          "type": "number"
+        },
+        "support": {
+          "title": "Support",
+          "type": "integer"
+        },
+        "clusterSupport": {
+          "title": "Clustersupport",
+          "type": "integer"
+        },
+        "because": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Because",
+          "type": "array"
+        },
+        "onWatchlist": {
+          "default": false,
+          "title": "Onwatchlist",
+          "type": "boolean"
+        },
+        "hasMetadata": {
+          "default": false,
+          "title": "Hasmetadata",
+          "type": "boolean"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "score",
+        "support",
+        "clusterSupport",
+        "because"
+      ],
+      "title": "Recommendation",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "meta": {
+      "$ref": "#/$defs/GraphMeta"
+    },
+    "nodes": {
+      "items": {
+        "$ref": "#/$defs/GraphNode"
+      },
+      "title": "Nodes",
+      "type": "array"
+    },
+    "edges": {
+      "items": {
+        "$ref": "#/$defs/GraphEdge"
+      },
+      "title": "Edges",
+      "type": "array"
+    },
+    "clusters": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ClusterProfile"
+      },
+      "title": "Clusters",
+      "type": "array"
+    },
+    "evaluation": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Evaluation"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "meta",
+    "nodes",
+    "edges"
+  ],
+  "title": "GraphPayload",
+  "type": "object"
+}

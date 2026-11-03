@@ -1,0 +1,26 @@
+{
+  "name": "trakt-ify-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "types": "cd .. && uv run trakt-ify schema --output web/src/lib/graph.schema.json && cd web && json2ts -i src/lib/graph.schema.json -o src/lib/graph.ts --bannerComment '/* Generated from the pydantic graph contract. Run `npm run types`; do not edit. */'"
+  },
+  "dependencies": {
+    "d3": "^7.9.0"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "@tsconfig/svelte": "^5.0.8",
+    "@types/d3": "^7.4.3",
+    "json-schema-to-typescript": "^16.0.0",
+    "svelte": "^5.57.3",
+    "svelte-check": "^4.7.8",
+    "typescript": "~5.9.3",
+    "vite": "^8.3.5"
+  }
+}

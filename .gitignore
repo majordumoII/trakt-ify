@@ -1,0 +1,22 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Atuin local state
+.atuin/
+
+# Local secrets and ingested data
+.env
+data/
+
+# Frontend
+node_modules/
+web/dist/
+web/.svelte-kit/
